@@ -20,9 +20,9 @@ function parseCal(cal: string): Array<CalendarItem> {
 
 function formatCalClass(c: any): CalendarItem {
   const name: string = c.SUMMARY;
-  const location: string = c.LOCATION;
-  const start: string = c["DTSTART;TZID=America/Vancouver"].split("T")[1];
-  const end: string = c["DTEND;TZID=America/Vancouver"].split("T")[1];
+  const location: string = c.LOCATION.replace("\\", "");
+  const start: string = c["DTSTART;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
+  const end: string = c["DTEND;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
   const day: string = c.RRULE.split("BYDAY=")[1];
   return {
     name,
@@ -35,7 +35,6 @@ function formatCalClass(c: any): CalendarItem {
 
 export {
   parseCal,
-  Calendar,
   CalendarItem,
 }
 
