@@ -10,6 +10,7 @@ CREATE TABLE calendar (
   calendar_id SERIAL,
   page_id UUID NOT NULL REFERENCES page ON DELETE CASCADE,
   owner VARCHAR(50) NOT NULL,
+  summary VARCHAR(255) NOT NULL,
   location VARCHAR(255) NOT NULL,
   start_time SMALLINT NOT NULL,
   end_time SMALLINT NOT NULL,
