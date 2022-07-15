@@ -24,7 +24,7 @@ const Home: NextPage = () => {
         body: data
       })
       const parseResponse = await response.json();
-      console.log(parseResponse);
+      console.log(`new link is localhost:3000/calendar/${parseResponse}`)
       // TODO: parseResponse is query paramater for new url to get!
       // redirect to new calendar page... also show url?
     }

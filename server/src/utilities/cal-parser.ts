@@ -1,10 +1,10 @@
 import * as ical2json from "ical2json";
 
 interface CalendarItem {
-  summary: string,
+  name: string,
   location: string,
-  start: string,
-  end: string,
+  start_time: string,
+  end_time: string,
   day: string,
 }
 
@@ -19,16 +19,16 @@ function parseCal(cal: string): Array<CalendarItem> {
 }
 
 function formatCalClass(c: any): CalendarItem {
-  const summary: string = c.SUMMARY;
+  const name: string = c.SUMMARY;
   const location: string = c.LOCATION.replace("\\", "");
-  const start: string = c["DTSTART;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
-  const end: string = c["DTEND;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
+  const start_time: string = c["DTSTART;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
+  const end_time: string = c["DTEND;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
   const day: string = c.RRULE.split("BYDAY=")[1];
   return {
-    summary,
+    name,
     location,
-    start,
-    end,
+    start_time,
+    end_time,
     day
   }
 }

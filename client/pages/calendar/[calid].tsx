@@ -4,6 +4,9 @@ const Calendar: NextPage = (props: any) => {
 console.log(props.calendar[0])
   return (
     <div>
+    <ul>
+    <li>{}</li>
+    </ul>
     </div>
   )
 }
