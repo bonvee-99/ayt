@@ -8,7 +8,7 @@ CREATE TABLE page (
 
 CREATE TABLE student (
   student_id SERIAL,
-  name VARCHAR(255) NOT NULL,
+  student_name VARCHAR(255) NOT NULL,
   page_id UUID NOT NULL, 
   PRIMARY KEY (student_id),
   FOREIGN KEY (page_Id) REFERENCES page(page_id)
@@ -16,7 +16,7 @@ CREATE TABLE student (
 
 CREATE TABLE course (
   course_id SERIAL,
-  name VARCHAR(255) NOT NULL,
+  course_name VARCHAR(255) NOT NULL,
   location VARCHAR(255) NOT NULL,
   start_time SMALLINT NOT NULL,
   end_time SMALLINT NOT NULL,

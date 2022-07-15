@@ -1,32 +1,33 @@
 import type { NextPage } from 'next'
-// import Head from 'next/head'
-// import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useState } from "react"
 import { FileUploader } from "react-drag-drop-files"
+import { useRouter } from "next/router"
 
 const fileTypes = ["ICS",]
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const [file, setFile] = useState(null);
-  const [url, setUrl] = useState(null);
 
   const handleChange = (file: any) => {
     setFile(file);
   }
 
   const createPage = async () => {
-    const data = new FormData();
-    if (file) {
-      data.append("file", file);
-      const response = await fetch("http://localhost:5000", {
-        method: "POST",
-        body: data
-      })
-      const parseResponse = await response.json();
-      console.log(`new link is localhost:3000/calendar/${parseResponse}`)
-      // TODO: parseResponse is query paramater for new url to get!
-      // redirect to new calendar page... also show url?
+    try {
+      const data = new FormData();
+      if (file) {
+        data.append("file", file);
+        const response = await fetch("http://localhost:5000", {
+          method: "POST",
+          body: data
+        })
+        const parseResponse = await response.json();
+        router.push(`/calendar/${parseResponse}`)
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
