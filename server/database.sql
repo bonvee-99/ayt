@@ -18,9 +18,10 @@ CREATE TABLE course (
   course_id SERIAL,
   course_name VARCHAR(255) NOT NULL,
   location VARCHAR(255) NOT NULL,
-  start_time SMALLINT NOT NULL,
-  end_time SMALLINT NOT NULL,
+  start_time VARCHAR(4) NOT NULL,
+  end_time VARCHAR(4) NOT NULL,
   day VARCHAR(2) NOT NULL,
+  semester VARCHAR(1) NOT NULL,
   PRIMARY KEY (course_id)
 );
 

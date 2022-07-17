@@ -24,8 +24,8 @@ app.post("/", async (req, res) => {
       // check if any of these courses already exist in database
       const findCourses = await Promise.all(data.map((calItem: CalendarItem) => {
         return pool.query(
-          "SELECT course_id FROM course WHERE course_name = $1 AND location = $2 AND start_time = $3 AND end_time = $4 AND day = $5",
-          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day]
+          "SELECT course_id FROM course WHERE course_name = $1 AND location = $2 AND start_time = $3 AND end_time = $4 AND day = $5 AND semester = $6",
+          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day, calItem.semester]
         )
       }));
 
@@ -49,8 +49,8 @@ app.post("/", async (req, res) => {
       // add missing courses
       const addedCourses = await Promise.all(missingCourses.map((calItem: CalendarItem) => {
         return pool.query(
-          "INSERT INTO course(course_name, location, start_time, end_time, day) VALUES ($1, $2, $3, $4, $5) RETURNING course_id",
-          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day]
+          "INSERT INTO course(course_name, location, start_time, end_time, day, semester) VALUES ($1, $2, $3, $4, $5, $6) RETURNING course_id",
+          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day, calItem.semester]
         )
       }));
 
@@ -92,12 +92,9 @@ app.get("/calendar/:pageId", async (req, res) => {
   try {
     // based on page id... get users... then get all their courses
     const { pageId } = req.params;
-    const getCal = await pool.query("SELECT s.student_name, c.course_name, c.day, c.location, c.start_time, c.end_time FROM student AS s INNER JOIN student_course AS sc ON s.student_id = sc.student_id INNER JOIN course as c ON c.course_id = sc.course_id WHERE s.page_id = $1", [
+    const getCal = await pool.query("SELECT s.student_name, s.student_id, c.course_name, c.day, c.location, c.start_time, c.end_time, c.semester FROM student AS s INNER JOIN student_course AS sc ON s.student_id = sc.student_id INNER JOIN course as c ON c.course_id = sc.course_id WHERE s.page_id = $1", [
       pageId
     ])
-    // select all student courses belonging to each student with page_id
-    // "SELECT u.grade, c.course_id, c.course_subject, c.course_code, c.course_section, c.course_year FROM user_course AS u 
-    // INNER JOIN courses as c ON c.course_id = u.course_id WHERE u.user_id = $1",
 
     res.json(getCal.rows);
   } catch (error) {
@@ -116,8 +113,8 @@ app.post("/calendar/:pageId", async (req, res) => {
       // check if any of these courses already exist in database
       const findCourses = await Promise.all(data.map((calItem: CalendarItem) => {
         return pool.query(
-          "SELECT course_id FROM course WHERE course_name = $1 AND location = $2 AND start_time = $3 AND end_time = $4 AND day = $5",
-          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day]
+          "SELECT course_id FROM course WHERE course_name = $1 AND location = $2 AND start_time = $3 AND end_time = $4 AND day = $5 AND semester = $6",
+          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day, calItem.semester]
         )
       }));
 
@@ -141,8 +138,8 @@ app.post("/calendar/:pageId", async (req, res) => {
       // add missing courses
       const addedCourses = await Promise.all(missingCourses.map((calItem: CalendarItem) => {
         return pool.query(
-          "INSERT INTO course(course_name, location, start_time, end_time, day) VALUES ($1, $2, $3, $4, $5) RETURNING course_id",
-          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day]
+          "INSERT INTO course(course_name, location, start_time, end_time, day, semester) VALUES ($1, $2, $3, $4, $5, $6) RETURNING course_id",
+          [calItem.course_name, calItem.location, calItem.start_time, calItem.end_time, calItem.day, calItem.semester]
         )
       }));
 
@@ -172,7 +169,7 @@ app.post("/calendar/:pageId", async (req, res) => {
         )
       }));
 
-      return res.json("HIT");
+      return res.sendStatus(200);
     } else {
       res.status(400).json("Error uploading file");
     }

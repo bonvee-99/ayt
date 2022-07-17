@@ -6,6 +6,8 @@ import { useRouter } from "next/router"
 
 const fileTypes = ["ICS",]
 
+const url = process.env.SERVER_URL || "http://localhost:5000";
+
 const Home: NextPage = () => {
   const router = useRouter();
   const [file, setFile] = useState(null);
@@ -19,7 +21,7 @@ const Home: NextPage = () => {
       const data = new FormData();
       if (file) {
         data.append("file", file);
-        const response = await fetch("http://localhost:5000", {
+        const response = await fetch(url, {
           method: "POST",
           body: data
         })

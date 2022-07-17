@@ -6,6 +6,7 @@ interface CalendarItem {
   start_time: string,
   end_time: string,
   day: string,
+  semester: string 
 }
 
 function parseCal(cal: string): Array<CalendarItem> {
@@ -24,12 +25,15 @@ function formatCalClass(c: any): CalendarItem {
   const start_time: string = c["DTSTART;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
   const end_time: string = c["DTEND;TZID=America/Vancouver"].split("T")[1].slice(0, 4);
   const day: string = c.RRULE.split("BYDAY=")[1];
+  const startDate: string = c["DTSTART;TZID=America/Vancouver"].slice(4, 6)
+  const semester: string = startDate === "09" || startDate === "05" ? "0" : "1";
   return {
     course_name,
     location,
     start_time,
     end_time,
-    day
+    day,
+    semester
   }
 }
 

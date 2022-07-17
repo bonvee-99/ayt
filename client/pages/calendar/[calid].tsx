@@ -2,11 +2,15 @@ import type { NextPage } from 'next'
 import styles from '../../styles/Home.module.css'
 import { useState } from "react"
 import { FileUploader } from "react-drag-drop-files"
+import BigCalendar from "../../components/BigCalendar"
+import Router from "next/router"
 
 const fileTypes = ["ICS",]
 
+const url = process.env.SERVER_URL || "http://localhost:5000";
+const pageUrl = process.env.PAGE_URL || "http://localhost:3000";
+
 const Calendar: NextPage = (props: any) => {
-  console.log(props.calendar);
   const [file, setFile] = useState(null);
 
   const handleChange = (file: any) => {
@@ -18,12 +22,11 @@ const Calendar: NextPage = (props: any) => {
       const data = new FormData();
       if (file) {
         data.append("file", file);
-        const response = await fetch(`http://localhost:5000/calendar/${props.calid}`, {
+        await fetch(`${url}/calendar/${props.calid}`, {
           method: "POST",
           body: data
         })
-        const parseResponse = await response.json();
-        console.log(parseResponse);
+        Router.reload();
       }
     } catch (error) {
       console.error(error)
@@ -33,7 +36,7 @@ const Calendar: NextPage = (props: any) => {
 
   return (
     <>
-      <h1>Calendar!: {props.calid}</h1>
+    <h1>{`${pageUrl}/calendar/${props.calid}`}</h1>
       <div className={styles.dragndrop}>
         <h1>Hello To Drag & Drop Files</h1>
         <FileUploader
@@ -44,6 +47,7 @@ const Calendar: NextPage = (props: any) => {
         />
         <p>{file ? `Received file: ${(file as any).name}` : "no files uploaded yet"}</p>
         <button onClick={addCal}>Add My Calendar</button>
+        <BigCalendar cal={props.calendar} />
       </div>
     </>
   )
@@ -51,7 +55,7 @@ const Calendar: NextPage = (props: any) => {
 
 export async function getServerSideProps(context: any) {
   const { calid } = context.params;
-  const response = await fetch(`http://localhost:5000/calendar/${calid}`)
+  const response = await fetch(`${url}/calendar/${calid}`)
   const calendar = await response.json();
 
   return {
