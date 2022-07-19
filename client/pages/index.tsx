@@ -33,8 +33,6 @@ const Home: NextPage = () => {
     }
   }
 
-  console.log(process.env.SERVER_URL)
-
   return (
     <div className={styles.headerctn}>
       <div className={styles.dragndrop}>

@@ -9,8 +9,8 @@ import Router from "next/router"
 
 const fileTypes = ["ICS",]
 
-const url = process.env.SERVER_URL || "http://localhost:5000";
-const pageUrl = process.env.VERCEL_URL || "http://localhost:3000";
+const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+// const pageUrl = process.env.VERCEL_URL || "http://localhost:3000";
 
 const COLORS = ["blue", "green", "red", "orange", "pink", "yellow", "grey", "brown", "cyan", "magenta", "black", "purple", "lime"];
 
