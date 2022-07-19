@@ -11,6 +11,7 @@ const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 const Home: NextPage = () => {
   const router = useRouter();
   const [file, setFile] = useState(null);
+  const [name, setName] = useState()
 
   const handleChange = (file: any) => {
     setFile(file);
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
   const createPage = async () => {
     try {
       const data = new FormData();
-      if (file) {
+      if (file && ) {
         data.append("file", file);
         const response = await fetch(url, {
           method: "POST",

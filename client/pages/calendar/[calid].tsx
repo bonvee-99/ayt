@@ -109,7 +109,7 @@ const Calendar: NextPage = ({ calid }: any) => {
 
   return (
     <>
-      <h1>{`${pageUrl}/calendar/${calid}`}</h1>
+      <h1>{`$/calendar/${calid}`}</h1>
       <div className={styles.headerctn}>
         <div className={styles.dragndrop}>
           <h1>Hello To Drag & Drop Files</h1>
