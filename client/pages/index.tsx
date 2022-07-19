@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 
 const fileTypes = ["ICS",]
 
-const url = process.env.SERVER_URL || "http://localhost:5000";
+const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
 const Home: NextPage = () => {
   const router = useRouter();
