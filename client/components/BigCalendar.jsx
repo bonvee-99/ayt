@@ -19,48 +19,8 @@ const localizer = dateFnsLocalizer({
   locales
 })
 
-const COLORS = ["blue", "green", "red", "orange", "pink", "yellow", "grey", "brown", "cyan", "magenta", "black", "purple", "lime"];
 
-const BigCalendar = (props) => {
-  const getDate = (d) => {
-    let date = {}
-    let day
-    if (d.day === "MO") {
-      day = 3
-    } else if (d.day === "TU") {
-      day = 4
-    } else if (d.day === "WE") {
-      day = 5
-    } else if (d.day === "TH") {
-      day = 6
-    } else if (d.day === "FR") {
-      day = 7
-    }
-    date.year = 2022
-    date.month = 0
-    date.day = day
-    return date
-  }
-
-  const formatCalendar = (e) => {
-    const seenusers = {};
-    let color = -1;
-    const studentCourses = e.map(studentCourse => {
-      if (!Object.keys(seenusers).includes(`${studentCourse.student_id}`)) {
-        color = color + 1;
-        seenusers[studentCourse.student_id] = COLORS[color];
-      }
-      let date = getDate(studentCourse)
-      return {
-        title: studentCourse.course_name + `: ${studentCourse.student_name}`,
-        start: new Date(date.year, date.month, date.day, studentCourse.start_time.slice(0, 2), studentCourse.end_time.toString().slice(2, 4)),
-        end: new Date(date.year, date.month, date.day, studentCourse.end_time.slice(0, 2), studentCourse.end_time.toString().slice(2, 4)),
-        color: seenusers[studentCourse.student_id]
-      }
-    })
-    return studentCourses;
-  }
-
+const BigCalendar = ({events}) => {
   const eventStyleGetter = (event) => {
     const style = {
       backgroundColor: event.color,
@@ -92,8 +52,8 @@ const BigCalendar = (props) => {
         toolbar={false}
         startAccessor="start"
         endAccessor="end"
-        events={formatCalendar(props.cal)}
-        style={{ height: "1000px", width: "1500px", margin: 0, padding: 0 }}
+        events={events}
+        style={{ height: "1000px", width: "1500px", margin: "auto", padding: 0 }}
         eventPropGetter={eventStyleGetter}
       />
     </div>

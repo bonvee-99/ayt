@@ -5,5 +5,34 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100vw;
+  max-width: 50vw;
+}
+
+.headerctn {
+  display: flex;
+  flex-direction: row;
+  max-height: 25vh;
+  justify-content: center;
+}
+
+.users {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-height: 60vh;
+  flex-wrap: wrap;
+  width: 10%;
+  border: 2px solid $purple;
+  list-style: none;
+}
+
+.user {
+  font-size: 1.5rem;
+  color: $purple;
+}
+
+.userCol {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
 }

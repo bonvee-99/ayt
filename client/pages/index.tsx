@@ -34,16 +34,18 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className={styles.dragndrop}>
-      <h1>Hello To Drag & Drop Files</h1>
-      <FileUploader
-        multiple={false}
-        handleChange={handleChange}
-        name="file"
-        types={fileTypes}
-      />
-      <p>{file ? `Received file: ${(file as any).name}` : "no files uploaded yet"}</p>
-      <button onClick={createPage}>Create Calendar Page</button>
+    <div className={styles.headerctn}>
+      <div className={styles.dragndrop}>
+        <h1>Hello To Drag & Drop Files</h1>
+        <FileUploader
+          multiple={false}
+          handleChange={handleChange}
+          name="file"
+          types={fileTypes}
+        />
+        <p>{file ? `Received file: ${(file as any).name}` : "no files uploaded yet"}</p>
+        <button onClick={createPage}>Create Calendar Page</button>
+      </div>
     </div>
   )
 }
