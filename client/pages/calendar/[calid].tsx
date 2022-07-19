@@ -10,7 +10,6 @@ import Router from "next/router"
 const fileTypes = ["ICS",]
 
 const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
-// const pageUrl = process.env.VERCEL_URL || "http://localhost:3000";
 
 const COLORS = ["blue", "green", "red", "orange", "pink", "yellow", "grey", "brown", "cyan", "magenta", "black", "purple", "lime"];
 
@@ -18,6 +17,7 @@ const Calendar: NextPage = ({ calid }: any) => {
   const [file, setFile] = useState(null)
   const [events, setEvents] = useState([])
   const [users, setUsers] = useState([])
+  const [name, setName] = useState("")
 
   const handleChange = (file: any) => {
     setFile(file);
@@ -26,8 +26,9 @@ const Calendar: NextPage = ({ calid }: any) => {
   const addCal = async () => {
     try {
       const data = new FormData();
-      if (file) {
+      if (file && name) {
         data.append("file", file);
+        data.append("name", name);
         await fetch(`${url}/calendar/${calid}`, {
           method: "POST",
           body: data
@@ -96,7 +97,7 @@ const Calendar: NextPage = ({ calid }: any) => {
         }
       })
       setEvents(evts)
-      
+
       let u: any = []
       cal.forEach((e: any) => {
         if (!u.some((user: any) => user.id === e.student_id)) {
@@ -106,6 +107,10 @@ const Calendar: NextPage = ({ calid }: any) => {
       setUsers(u)
     })()
   }, [])
+
+  const onChange = (e: any) => {
+    setName(e.target.value)
+  }
 
   return (
     <>
@@ -120,6 +125,10 @@ const Calendar: NextPage = ({ calid }: any) => {
             types={fileTypes}
           />
           <p>{file ? `Received file: ${(file as any).name}` : "no files uploaded yet"}</p>
+          <label>
+            Name:
+            <input type="text" value={name} onChange={onChange} />
+          </label>
           <button onClick={addCal}>Add My Calendar</button>
         </div>
         {users.length > 0 && <Users userList={users} toggleUser={toggleUser} />}

@@ -11,7 +11,7 @@ const url = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 const Home: NextPage = () => {
   const router = useRouter();
   const [file, setFile] = useState(null);
-  const [name, setName] = useState()
+  const [name, setName] = useState("")
 
   const handleChange = (file: any) => {
     setFile(file);
@@ -20,8 +20,9 @@ const Home: NextPage = () => {
   const createPage = async () => {
     try {
       const data = new FormData();
-      if (file && ) {
+      if (file && name) {
         data.append("file", file);
+        data.append("name", name);
         const response = await fetch(url, {
           method: "POST",
           body: data
@@ -32,6 +33,10 @@ const Home: NextPage = () => {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  const onChange = (e: any) => {
+    setName(e.target.value)
   }
 
   return (
@@ -45,6 +50,10 @@ const Home: NextPage = () => {
           types={fileTypes}
         />
         <p>{file ? `Received file: ${(file as any).name}` : "no files uploaded yet"}</p>
+        <label>
+        Name:
+        <input type="text" value={name} onChange={onChange}/>
+        </label>
         <button onClick={createPage}>Create Calendar Page</button>
       </div>
     </div>
