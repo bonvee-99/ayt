@@ -53,7 +53,7 @@ const BigCalendar = ({events}) => {
         startAccessor="start"
         endAccessor="end"
         events={events}
-        style={{ height: "1000px", width: "1500px", margin: "auto", padding: 0 }}
+        style={{ height: "1000px", width: "1500px", margin: "auto", marginTop: "100px", padding: 0 }}
         eventPropGetter={eventStyleGetter}
       />
     </div>
